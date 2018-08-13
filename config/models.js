@@ -15,7 +15,7 @@
 
 module.exports.models = {
 
-
+  fetchRecordsOnCreate: true,
   /***************************************************************************
   *                                                                          *
   * Whether the `.create()` and `.update()` model methods should ignore      *
@@ -53,7 +53,7 @@ module.exports.models = {
   *                                                                          *
   ***************************************************************************/
 
-  // migrate: 'alter',
+  migrate: 'safe',
 
 
   /***************************************************************************

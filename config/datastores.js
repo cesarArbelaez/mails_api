@@ -31,7 +31,17 @@ module.exports.datastores = {
   * (For production configuration, see `config/env/production.js`.)          *
   *                                                                          *
   ***************************************************************************/
-
+ 'sqlserver': {
+  adapter: 'sails-sqlserver',
+  user: 'carlkohler',
+  password: 'GTI1358ck',
+  host: 'SQLMCDEV.DATABASE.WINDOWS.NET',
+  port: 1433,
+  database: 'SQLMCDBDEV',
+  options: {
+    encrypt: true
+  }
+},
   default: {
 
     /***************************************************************************
