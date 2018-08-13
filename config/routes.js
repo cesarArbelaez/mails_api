@@ -49,7 +49,7 @@ module.exports.routes = {
   //  ╦ ╦╔═╗╔╗ ╦ ╦╔═╗╔═╗╦╔═╔═╗
   //  ║║║║╣ ╠╩╗╠═╣║ ║║ ║╠╩╗╚═╗
   //  ╚╩╝╚═╝╚═╝╩ ╩╚═╝╚═╝╩ ╩╚═╝
-
+  'POST /emailNotifications': 'MailController.getMailNotifys',
 
   //  ╔╦╗╦╔═╗╔═╗
   //  ║║║║╚═╗║
