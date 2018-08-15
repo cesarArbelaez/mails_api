@@ -21,9 +21,9 @@ module.exports = {
                     reason: response[mail].reason,
                 })
                 .then(newEvent =>{
-                    console.log(newEvent.smtpid)
+                    console.log(newEvent.smtpid);
                 }).catch(error => {
-                    return res.serverError(error);
+                    console.log(newEvent.smtpid)
                 });      
             }
         }
