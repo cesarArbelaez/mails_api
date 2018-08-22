@@ -44,12 +44,15 @@ module.exports.routes = {
   //  ╠═╣╠═╝║  ║╣ ║║║ ║║╠═╝║ ║║║║║ ║ ╚═╗
   //  ╩ ╩╩  ╩  ╚═╝╝╚╝═╩╝╩  ╚═╝╩╝╚╝ ╩ ╚═╝
 
-
-
+  'POST /emailSendNoti': 'MailController.sendNotify',
+  'POST /sendItinerary': 'MailController.sendItinerary',
+  'POST /sendCancel': 'MailController.sendCancelNoty',
   //  ╦ ╦╔═╗╔╗ ╦ ╦╔═╗╔═╗╦╔═╔═╗
   //  ║║║║╣ ╠╩╗╠═╣║ ║║ ║╠╩╗╚═╗
   //  ╚╩╝╚═╝╚═╝╩ ╩╚═╝╚═╝╩ ╩╚═╝
-  'POST /emailNotifications': 'MailController.getMailNotifys',
+  'POST /emailNotifications': 'MailController.getMailNotifys'
+
+  
 
   //  ╔╦╗╦╔═╗╔═╗
   //  ║║║║╚═╗║
