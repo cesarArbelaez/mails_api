@@ -74,9 +74,7 @@ module.exports = {
                         User: input.User,
                         meetingName: input.meetingName, 
                         pnrNumber: input.pnrNumber, 
-                        meetingAdministrator: input.meetingAdministrator, 
-                        travelAgent: input.travelAgent, 
-                        Vendedor: input.Vendedor, 
+                        meetingAdministrator: input.meetingAdministrator,   
                         emailNotification: input.emailNotification, 
                         urlItinerarey: input.urlItinerarey
                     }
