@@ -47,6 +47,8 @@ module.exports.routes = {
   'POST /emailSendNoti': 'MailController.sendNotify',
   'POST /sendItinerary': 'MailController.sendItinerary',
   'POST /sendCancel': 'MailController.sendCancelNoty',
+  'POST /sendCancelSW': 'MailController.sendCancelNotySW',
+  'POST /sendCancelError': 'MailController.sendCancelError',
   //  ╦ ╦╔═╗╔╗ ╦ ╦╔═╗╔═╗╦╔═╔═╗
   //  ║║║║╣ ╠╩╗╠═╣║ ║║ ║╠╩╗╚═╗
   //  ╚╩╝╚═╝╚═╝╩ ╩╚═╝╚═╝╩ ╩╚═╝

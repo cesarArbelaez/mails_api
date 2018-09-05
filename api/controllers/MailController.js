@@ -41,18 +41,8 @@ module.exports = {
         console.log(time)
         sgMail.send(msg)
         .then(result => {
-            SendingMail.create({
-                email: input.email,
-                timestamp: time,
-                smtpid: result[0].headers['x-message-id'],
-                MeetingID: input.MeetingID,
-            })
-            .then(newSending =>{
-                console.log(newSending.smtpid); 
-            }).catch(error => {
-                console.log(error)
-            });      
-            return res.json(result)
+            saveMailSending(input, time, result);      
+            return res.json(result);
         })
         .catch(error => {
             return res.badRequest(error.toString())
@@ -82,21 +72,11 @@ module.exports = {
             ]
         };
         var time = new Date().getTime();
-        console.log(time)
+        console.log(time);
         sgMail.send(msg)
         .then(result => {
-            SendingMail.create({
-                email: input.email,
-                timestamp: time,
-                smtpid: result[0].headers['x-message-id'],
-                MeetingID: input.MeetingID,
-            })
-            .then(newSending =>{
-                console.log(newSending.smtpid); 
-            }).catch(error => {
-                console.log(error)
-            });      
-            return res.json(result)
+            saveMailSending(input, time, result);    
+            return res.json(result);
         })
         .catch(error => {
             return res.badRequest(error.toString())
@@ -129,18 +109,69 @@ module.exports = {
         console.log(time)
         sgMail.send(msg)
         .then(result => {
-            SendingMail.create({
-                email: input.email,
-                timestamp: time,
-                smtpid: result[0].headers['x-message-id'],
-                MeetingID: input.MeetingID,
-            })
-            .then(newSending =>{
-                console.log(newSending.smtpid); 
-            }).catch(error => {
-                console.log(error)
-            });      
-            return res.json(result)
+            saveMailSending(input, time, result);    
+            return res.json(result);
+        })
+        .catch(error => {
+            return res.badRequest(error.toString())
+        });
+    },
+    sendCancelNotySW: (req, res) => {
+        var input = req.body;   
+        const msg = {
+            from: sendGridSettings.emailFrom,
+            templateId: 'd-c0af670f67dc41a1980341721db9e265',
+            personalizations:[  
+                {   
+                    to:[   
+                        {  
+                            email: input.email
+                        }
+                    ],
+                    dynamic_template_data:{   
+                        meetingContactInfo: input.meetingContactInfo,
+                        user: input.user, 
+                        pnr: input.pnr, 
+                    }
+                }
+            ]
+        };
+        var time = new Date().getTime();
+        console.log(time);
+        sgMail.send(msg)
+        .then(result => {
+            saveMailSending(input, time, result);    
+            return res.json(result);
+        })
+        .catch(error => {
+            return res.badRequest(error.toString())
+        });
+    },
+    sendCancelError: (req, res) => {
+        var input = req.body;   
+        const msg = {
+            from: sendGridSettings.emailFrom,
+            templateId: 'd-da99a8b21bc64ac3b38b1b2d86786559',
+            personalizations:[  
+                {   
+                    to:[   
+                        {  
+                            email: input.email
+                        }
+                    ],
+                    dynamic_template_data:{   
+                        user: input.user, 
+                        agentEmail: input.agentEmail, 
+                    }
+                }
+            ]
+        };
+        var time = new Date().getTime();
+        console.log(time);
+        sgMail.send(msg)
+        .then(result => {
+            saveMailSending(input, time, result);    
+            return res.json(result);
         })
         .catch(error => {
             return res.badRequest(error.toString())
@@ -170,4 +201,18 @@ module.exports = {
         return res.json({answer: "true"})
     }
 };
+
+function saveMailSending(input, time, result) {
+    SendingMail.create({
+        email: input.email,
+        timestamp: time,
+        smtpid: result[0].headers['x-message-id'],
+        MeetingID: input.MeetingID,
+    })
+    .then(newSending => {
+        console.log(newSending.smtpid);
+    }).catch(error => {
+        console.log(error);
+    });
+}
 
