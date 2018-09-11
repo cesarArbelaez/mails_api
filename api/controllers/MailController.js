@@ -1,3 +1,5 @@
+
+
 /**
  * MailController
  *
@@ -41,7 +43,7 @@ module.exports = {
         console.log(time)
         sgMail.send(msg)
         .then(result => {
-            saveMailSending(input, time, result);      
+            Mail.saveMailSending(input, time, result);      
             return res.json(result);
         })
         .catch(error => {
@@ -75,7 +77,7 @@ module.exports = {
         console.log(time);
         sgMail.send(msg)
         .then(result => {
-            saveMailSending(input, time, result);    
+            Mail.saveMailSending(input, time, result); 
             return res.json(result);
         })
         .catch(error => {
@@ -109,7 +111,7 @@ module.exports = {
         console.log(time)
         sgMail.send(msg)
         .then(result => {
-            saveMailSending(input, time, result);    
+            Mail.saveMailSending(input, time, result);  
             return res.json(result);
         })
         .catch(error => {
@@ -140,7 +142,7 @@ module.exports = {
         console.log(time);
         sgMail.send(msg)
         .then(result => {
-            saveMailSending(input, time, result);    
+            Mail.saveMailSending(input, time, result);   
             return res.json(result);
         })
         .catch(error => {
@@ -170,7 +172,7 @@ module.exports = {
         console.log(time);
         sgMail.send(msg)
         .then(result => {
-            saveMailSending(input, time, result);    
+            Mail.saveMailSending(input, time, result);   
             return res.json(result);
         })
         .catch(error => {
@@ -198,21 +200,8 @@ module.exports = {
                 });      
             }
         }
-        return res.json({answer: "true"})
+        return res.json({answer: "true"});
     }
 };
 
-function saveMailSending(input, time, result) {
-    SendingMail.create({
-        email: input.email,
-        timestamp: time,
-        smtpid: result[0].headers['x-message-id'],
-        MeetingID: input.MeetingID,
-    })
-    .then(newSending => {
-        console.log(newSending.smtpid);
-    }).catch(error => {
-        console.log(error);
-    });
-}
 

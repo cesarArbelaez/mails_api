@@ -30,22 +30,17 @@ module.exports = {
   *                                                                         *
   **************************************************************************/
   datastores: {
-
-    /***************************************************************************
-    *                                                                          *
-    * Configure your default production database.                              *
-    *                                                                          *
-    * 1. Choose an adapter:                                                    *
-    *    https://sailsjs.com/plugins/databases                                 *
-    *                                                                          *
-    * 2. Install it as a dependency of your Sails app.                         *
-    *    (For example:  npm install sails-mysql --save)                        *
-    *                                                                          *
-    * 3. Then set it here (`adapter`), along with a connection URL (`url`)     *
-    *    and any other, adapter-specific customizations.                       *
-    *    (See https://sailsjs.com/config/datastores for help.)                 *
-    *                                                                          *
-    ***************************************************************************/
+    'sqlserver': {
+      adapter: 'sails-sqlserver',
+      user: 'gtitravelmc',
+      password: 'GTI1358ck',
+      host: 'SQLMC.DATABASE.WINDOWS.NET',
+      port: 1433,
+      database: 'SQLMCDB',
+      options: {
+        encrypt: true
+      }
+    },
     default: {
       // adapter: 'sails-mysql',
       // url: 'mysql://user:password@host:port/database',
@@ -394,6 +389,9 @@ module.exports = {
 	sendGridSettings: {
 		key: "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",
 		emailFrom: "meetingdesk@meetingscomplete.com"
+  },
+  meetingsSettings: {
+		site: "https://www.meetingscomplete.com"
 	},
 
 
