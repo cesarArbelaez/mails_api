@@ -1,6 +1,7 @@
 const meetingsSettings = sails.config.meetingsSettings;
 const sgMail = require('@sendgrid/mail');
 const sendGridSettings = sails.config.sendGridSettings;
+const dateformat = require('dateformat');
 sgMail.setApiKey(sendGridSettings.key);
 
 module.exports = {
@@ -19,25 +20,15 @@ module.exports = {
     },
     scheduleSending : () =>{
         var dateNow = Date.now();
-        Invitation.find({mailSend : false}).then
+        var invite;
+        console.log('now date : ' + dateNow)
+        Invitation.find({mailSend : false, IsDeleted: false}).then
         (invitations =>{
-            for (i = 0; i < invitations.length; i++) { 
-                meetingId=invitations[i].MID;
-                Meeting.findOne(meetingId).then(meeting => {
-                    if (meeting.MailScheduleDate != null)
-                    {
-                        var dbDate = new Date(meeting.MailScheduleDate);
-                        var diff = Math.abs(dateNow - dbDate);
-                        diff = diff / (1000 * 60 * 60);
-                        if (diff > 0)
-                        {
-                            sendInvitation(meeting, invitations[i]);
-                        }
-                    }
-                }).catch(error =>
-                {
-                    console.log(error);
-                });
+            console.log(JSON.stringify(invitations));
+            for (invite of invitations) {
+                meetingId=invite.Meeting;
+                attende = invite;
+                verifySending(dateNow, attende);
             }           
         }).catch(error =>
         {
@@ -46,6 +37,21 @@ module.exports = {
     }
 }
 
+
+async function verifySending(dateNow, attende) {
+    meeting = await Meeting.findOne({ MeetingID: meetingId });
+    if (meeting.MailScheduleDate != null) {
+        console.log('meeting with schedule : ' + meetingId);
+        var dbDate = new Date(meeting.MailScheduleDate);
+        var diff = Math.abs(dateNow - dbDate);
+        diff = diff / (1000 * 60 * 60);
+        console.log('date diff is : ' + diff);
+        if (diff > 0) {
+            console.log('sending invitation : ' + attende.GuestListID);
+            sendInvitation(meeting, attende);
+        }
+    }
+}
 
 function sendInvitation(meeting, invitation) {
     var start = new Date(meeting.Start_Date);
@@ -75,7 +81,7 @@ function sendInvitation(meeting, invitation) {
                         location: meeting.Location,
                         address: meeting.Address,
                         adminEmail: meeting.Admin_Address,
-                        urlRegister: meetingsSettings.site + '/Onboarding/meeting-info/' + meetingId + '?idAttendee=' + invitation.id + '&code=' + invitation.Validate_Identity
+                        urlRegister: meetingsSettings.site + '/Onboarding/meeting-info/' + meeting.MeetingID + '?idAttendee=' + invitation.GuestListID + '&code=' + invitation.Validate_Identity
                     }
                 }
             ]
@@ -84,13 +90,18 @@ function sendInvitation(meeting, invitation) {
         console.log(time);
         sgMail.send(msg)
         .then(result => {
-            saveMailSending(input, time, result);
+            const input =
+            {
+                email: invitation.EMail_Address,
+                MeetingID : meeting.MeetingID 
+            };
+            Mail.saveMailSending(input, time, result);
             console.log(result);
         })
         .catch(error => {
             console.log(error.toString());
         });
-        Invitation.update({ GuestListID: inviteToMeeting.GuestListID })
+        Invitation.update({ GuestListID: invitation.GuestListID })
         .set({
             mailSend: true
         })
