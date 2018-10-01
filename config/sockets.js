@@ -42,13 +42,12 @@ module.exports.sockets = {
   *                                                                          *
   ***************************************************************************/
 
-  // beforeConnect: function(handshake, proceed) {
+ beforeConnect: function(handshake, cb) {
+  //   // `true` allows the connection
+     return cb(null, true);
   //
-  //   // `true` allows the socket to connect.
   //   // (`false` would reject the connection)
-  //   return proceed(undefined, true);
-  //
-  // },
+   },
 
 
   /***************************************************************************
